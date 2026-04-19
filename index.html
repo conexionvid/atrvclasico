@@ -2,9 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Atoyac Radio - Player PWA</title>
+  <title>ATOYAC RADIO VERACRUZ - CLASICOS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   
+  <meta property="og:title" content="ATOYAC RADIO VERACRUZ - CLASICOS">
+  <meta property="og:description" content="Promover el turismo, la cultura, la educación, historia y resaltar los valores del ser humano, para mantener las buenas relaciones entre las personas.">
+  <meta property="og:image" content="https://i.postimg.cc/QtkR5W5q/logo.jpg">
+  <meta property="og:type" content="website">
+  <meta name="description" content="Promover el turismo, la cultura, la educación, historia y resaltar los valores del ser humano, para mantener las buenas relaciones entre las personas.">
+
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#ff4500">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -92,10 +98,10 @@
     .player-container { width: 100%; min-height: 420px; background: #fff; }
     #extassisnetwork { width: 100% !important; height: 420px !important; }
 
-    /* BANNER PUBLICIDAD */
+    /* BANNER PUBLICIDAD (TAMAÑO DUPLICADO A 240px) */
     .banner-container {
       width: 100%;
-      height: 120px;
+      height: 240px; 
       background: #fff;
       display: flex;
       align-items: center;
@@ -104,7 +110,12 @@
       border-radius: 0 0 15px 15px;
     }
     .slide-banner { display: none; width: 100%; text-align: center; }
-    .slide-banner img { width: 90%; border-radius: 8px; max-height: 100px; object-fit: contain; }
+    .slide-banner img { 
+      width: 90%; 
+      border-radius: 8px; 
+      max-height: 220px; 
+      object-fit: contain; 
+    }
 
     /* ESTILO BOTÓN PLAY */
     .luna-play-button {
