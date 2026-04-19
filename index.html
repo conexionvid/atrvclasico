@@ -98,7 +98,22 @@
     .player-container { width: 100%; min-height: 420px; background: #fff; }
     #extassisnetwork { width: 100% !important; height: 420px !important; }
 
-    /* BANNER PUBLICIDAD (TAMAÑO DUPLICADO A 240px) */
+    /* ANIMACIÓN LIVE (INDICADOR ((·)) LIVE) */
+    .luna-live-icon {
+        color: #666666 !important; /* Gris por defecto */
+        transition: color 0.5s ease;
+    }
+    .luna-live-icon.active {
+        color: #ff0000 !important; /* Rojo cuando está activo */
+        animation: blink-live 2s infinite;
+    }
+    @keyframes blink-live {
+        0% { opacity: 1; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1; }
+    }
+
+    /* BANNER PUBLICIDAD (TAMAÑO DUPLICADO) */
     .banner-container {
       width: 100%;
       height: 240px; 
@@ -142,7 +157,7 @@
     
     <div id="menu-redes">
         <a href="https://wa.me/522731235643" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"> WhatsApp</a>
-        <a href="https://www.facebook.com/p/Atoyac-Radio-Veracruz-100063440811923/" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"> Facebook</a>
+        <a href="https://www.facebook.com/p/Atoyac-Radio-Veracruz-100063440811923/?locale=es_LA" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"> Facebook</a>
         <a href="https://www.youtube.com/@atoyacradioveracruz/featured" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"> YouTube</a>
         <a href="https://www.tiktok.com/@atoyacradioveracruz2" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"> TikTok</a>
         <a href="https://t.me/+522712139053" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"> Telegram</a>
@@ -166,7 +181,7 @@
     });
   }
 
-  // BANNERS (18 espacios)
+  // BANNERS (18 espacios sugeridos)
   const misBanners = [
     { img: "https://i.postimg.cc/QtkR5W5q/logo.jpg", link: "#" },
     { img: "https://i.postimg.cc/rpY412kJ/Pollos-garlez.jpg", link: "#" }
@@ -194,13 +209,19 @@
       coverimage: "https://i.postimg.cc/QtkR5W5q/logo.jpg",
       backgroundcolor: "rgba(255,255,255,1)",
       fontcolor: "#333333",
-      hightlightcolor: "#ff4500",
+      hightlightcolor: "#ff0000", // Color rojo para resaltar actividad
       streamurl: "https://stream.espora.org",
       streamtype: "icecast2",
       icecastmountpoint: "/atrv",
       usestreamcorsproxy: "true",
       autoplay: false
     });
+
+    // Activar parpadeo del icono Live al cargar
+    setTimeout(function(){
+       $('.luna-live-icon').addClass('active');
+    }, 3000);
+
     startBanners();
     $(document).click(e => { if (!$(e.target).closest('.header-station').length) $("#menu-redes").fadeOut(200); });
   });
