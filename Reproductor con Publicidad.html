@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Atoyac Radio - Player Oficial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
+  
+  <style>
+    /* FONDO DE PÁGINA DEGRADADO */
+    body {
+      font-family: 'Be Vietnam', sans-serif;
+      background: linear-gradient(180deg, #000000 0%, #434343 100%);
+      background-attachment: fixed;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 0;
+      min-height: 100vh;
+    }
+
+    .main-wrapper {
+      width: 360px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .header-station {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      gap: 12px;
+    }
+    .header-station img { height: 42px; width: auto; }
+    .header-station span { font-weight: bold; color: #333; font-size: 13px; text-transform: uppercase; }
+
+    #extassisnetwork {
+      width: 360px;
+      height: 430px;
+      position: relative;
+      overflow: hidden;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    /* --- SOLUCIÓN AL BOTÓN INVISIBLE --- */
+    /* Creamos un anillo exterior de color naranja para que resalte sobre cualquier carátula */
+    .luna-play-button {
+        border: 4px solid #ff4500 !important; /* Anillo Naranja grueso alrededor */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(0,0,0,0.5) !important;
+        background-color: rgba(0, 0, 0, 0.3) !important; /* Fondo oscuro traslúcido tras el icono */
+        animation: pulse-orange 2s infinite;
+    }
+
+    /* Ajuste del icono dentro del botón para que sea blanco pero con sombra negra */
+    .luna-play-button i {
+        color: #ffffff !important;
+        text-shadow: 2px 2px 4px #000;
+    }
+
+    @keyframes pulse-orange {
+        0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7); }
+        70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); }
+    }
+
+    .cover { width: 100%; height: 280px; background-size: cover; background-position: center; border-radius: 10px; }
+    .meta { margin-top: 10px; text-align: center; }
+    .title { font-weight: 700; font-size: 1em; color: #222; }
+    .artist { color: #666; margin-top: 4px; font-size: 0.9em; }
+
+    .banner-container { width: 100%; background: #fff; padding: 5px 0; text-align: center; min-height: 100px; }
+    .slide { display: none; }
+    .slide img { width: 92%; border-radius: 8px; cursor: pointer; }
+
+    .footer-social { padding: 15px 5px; text-align: center; background: #fdfdfd; border-top: 1px solid #f0f0f0; }
+    .social-icons { display: flex; justify-content: space-around; align-items: center; }
+    .social-icons a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 8px; width: 60px; }
+    .social-icons img { width: 26px; height: 26px; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+  <div class="header-station">
+    <img src="https://i.postimg.cc/QtkR5W5q/logo.jpg" alt="Logo">
+    <span>ATOYAC RADIO VERACRUZ</span>
+  </div>
+
+  <div id="extassisnetwork">
+    <div id="cover" class="cover"></div>
+    <div class="meta">
+      <div class="title" id="trackTitle">Conectando...</div>
+      <div class="artist" id="trackArtist">Atoyac Radio</div>
+    </div>
+  </div>
+
+  <div class="banner-container" id="ads"></div>
+
+  <div class="footer-social">
+    <div class="social-icons">
+      <a href="https://wa.me/522731235643" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">WhatsApp</a>
+      <a href="https://www.facebook.com/p/Atoyac-Radio-Veracruz-100063440811923/?locale=es_LA" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">Facebook</a>
+      <a href="https://www.youtube.com/@atoyacradioveracruz/featured" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">YouTube</a>
+      <a href="https://www.tiktok.com/@atoyacradioveracruz2" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">TikTok</a>
+      <a href="https://t.me/+522712139053" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">Telegram</a>
+    </div>
+  </div>
+</div>
+
+<script>
+    const misBanners = [
+      { activo: true, imagen: "https://i.postimg.cc/rpY412kJ/Pollos-garlez.jpg", link: "#" },
+      { activo: true, imagen: "https://i.postimg.cc/QtkR5W5q/logo.jpg", link: "#" }
+    ];
+
+    function inicializarBanners() {
+        const contenedor = document.getElementById('ads');
+        const activos = misBanners.filter(b => b.activo);
+        if (activos.length === 0) { contenedor.style.display = 'none'; return; }
+        activos.forEach(b => {
+            const div = document.createElement('div');
+            div.className = 'slide';
+            div.innerHTML = `<a href="${b.link}" target="_blank"><img src="${b.imagen}"></a>`;
+            contenedor.appendChild(div);
+        });
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        if(slides.length > 0) slides[0].style.display = 'block';
+        if(slides.length > 1) {
+            setInterval(() => {
+                slides[current].style.display = 'none';
+                current = (current + 1) % slides.length;
+                slides[current].style.display = 'block';
+            }, 5000);
+        }
+    }
+
+    $("#extassisnetwork").lunaradio({
+      userinterface: "big",
+      coverimage: "https://i.postimg.cc/QtkR5W5q/logo.jpg",
+      onlycoverimage: false,
+      streamurl: "https://stream.espora.org",
+      streamtype: "icecast2",
+      icecastmountpoint: "/atrv",
+      usestreamcorsproxy: "true",
+      hightlightcolor: "#ff4500", /* Naranja para los elementos internos */
+      fontcolor: "#333333",
+    });
+
+    document.getElementById('cover').style.backgroundImage = 'url("https://i.postimg.cc/QtkR5W5q/logo.jpg")';
+
+    async function fetchMetadata(){
+      try {
+        const res = await fetch("https://stream.espora.org/status-json.xsl", {cache: "no-store"});
+        const data = await res.json();
+        let source = data.icestats.source;
+        if(Array.isArray(source)){
+          source = source.find(s => s.listenurl && s.listenurl.includes("/atrv")) || source[0];
+        }
+        if(source){
+          const title = source.title || "Atoyac Radio";
+          let artist = "", track = title;
+          if(title.includes(" - ")){ [artist, track] = title.split(" - ",2); }
+          document.getElementById('trackTitle').textContent = track;
+          document.getElementById('trackArtist').textContent = artist || "En Vivo";
+          if(source.image) document.getElementById('cover').style.backgroundImage = 'url("' + source.image + '")';
+        }
+      } catch (err) { console.warn("Metadata error", err); }
+    }
+
+    $(document).ready(function() {
+        inicializarBanners();
+        fetchMetadata();
+        setInterval(fetchMetadata, 5000);
+    });
+</script>
+</body>
+</html>

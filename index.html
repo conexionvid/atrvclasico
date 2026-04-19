@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Atoyac Radio - Player PWA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff4500">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="https://i.postimg.cc/QtkR5W5q/logo.jpg">
+
+  <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://extassisnetwork.com/player/Luna/luna.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Be Vietnam', sans-serif;
+      background: linear-gradient(180deg, #000000 0%, #434343 100%);
+      background-attachment: fixed;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 10px;
+    }
+
+    .main-wrapper {
+      width: 100%;
+      max-width: 380px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: visible;
+    }
+
+    /* CABECERA */
+    .header-station {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+    }
+    .brand-box { display: flex; align-items: center; gap: 8px; }
+    .brand-box img { height: 35px; width: auto; }
+    .brand-box span { font-weight: bold; color: #333; font-size: 11px; text-transform: uppercase; }
+
+    /* BOTÓN REDES */
+    .btn-redes-top {
+      background: #ff4500;
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* MENÚ DESPLEGABLE */
+    #menu-redes {
+      display: none;
+      position: absolute;
+      top: 55px;
+      right: 15px;
+      background: #ffffff;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      border-radius: 12px;
+      z-index: 1000;
+      width: 220px;
+      padding: 5px 0;
+    }
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #333;
+      font-size: 12px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .menu-link:last-child { border: none; }
+    .menu-link img { width: 20px; height: 20px; }
+
+    /* REPRODUCTOR */
+    .player-container { width: 100%; min-height: 420px; background: #fff; }
+    #extassisnetwork { width: 100% !important; height: 420px !important; }
+
+    /* BANNER PUBLICIDAD */
+    .banner-container {
+      width: 100%;
+      height: 120px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid #eee;
+      border-radius: 0 0 15px 15px;
+    }
+    .slide-banner { display: none; width: 100%; text-align: center; }
+    .slide-banner img { width: 90%; border-radius: 8px; max-height: 100px; object-fit: contain; }
+
+    /* ESTILO BOTÓN PLAY */
+    .luna-play-button {
+      border: 4px solid #ff4500 !important;
+      box-shadow: 0 0 20px rgba(255, 69, 0, 0.5) !important;
+      animation: pulse-orange 2s infinite;
+    }
+    @keyframes pulse-orange {
+      0% { transform: scale(1); }
+      70% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+  <div class="header-station">
+    <div class="brand-box">
+      <img src="https://i.postimg.cc/QtkR5W5q/logo.jpg" alt="Logo">
+      <span>ATOYAC RADIO VERACRUZ</span>
+    </div>
+    <div class="btn-redes-top" onclick="$('#menu-redes').fadeToggle(200)">REDES ▾</div>
+    
+    <div id="menu-redes">
+        <a href="https://wa.me/522731235643" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"> WhatsApp</a>
+        <a href="https://www.facebook.com/p/Atoyac-Radio-Veracruz-100063440811923/" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"> Facebook</a>
+        <a href="https://www.youtube.com/@atoyacradioveracruz/featured" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"> YouTube</a>
+        <a href="https://www.tiktok.com/@atoyacradioveracruz2" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png"> TikTok</a>
+        <a href="https://t.me/+522712139053" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"> Telegram</a>
+        <a href="https://www.facebook.com/groups/723883178113987/" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/665/665209.png"> Grupo Radio Ver.</a>
+        <a href="https://www.facebook.com/groups/257099884992808" class="menu-link" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/665/665209.png"> Grupo Atoyac Radio</a>
+    </div>
+  </div>
+
+  <div class="player-container">
+    <div id="extassisnetwork"></div>
+  </div>
+
+  <div class="banner-container" id="banner-box"></div>
+</div>
+
+<script>
+  // REGISTRO SERVICE WORKER PARA PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('Error PWA', err));
+    });
+  }
+
+  // BANNERS (18 espacios)
+  const misBanners = [
+    { img: "https://i.postimg.cc/QtkR5W5q/logo.jpg", link: "#" },
+    { img: "https://i.postimg.cc/rpY412kJ/Pollos-garlez.jpg", link: "#" }
+  ];
+
+  function startBanners() {
+    const box = $('#banner-box');
+    misBanners.forEach((b, i) => {
+      box.append(`<div class="slide-banner" id="b-${i}"><a href="${b.link}" target="_blank"><img src="${b.img}"></a></div>`);
+    });
+    let idx = 0; $(`#b-${idx}`).show();
+    if(misBanners.length > 1) {
+      setInterval(() => {
+        $(`#b-${idx}`).fadeOut(500, function() {
+          idx = (idx + 1) % misBanners.length;
+          $(`#b-${idx}`).fadeIn(500);
+        });
+      }, 6000);
+    }
+  }
+
+  $(document).ready(function() {
+    $("#extassisnetwork").lunaradio({
+      userinterface: "big",
+      coverimage: "https://i.postimg.cc/QtkR5W5q/logo.jpg",
+      backgroundcolor: "rgba(255,255,255,1)",
+      fontcolor: "#333333",
+      hightlightcolor: "#ff4500",
+      streamurl: "https://stream.espora.org",
+      streamtype: "icecast2",
+      icecastmountpoint: "/atrv",
+      usestreamcorsproxy: "true",
+      autoplay: false
+    });
+    startBanners();
+    $(document).click(e => { if (!$(e.target).closest('.header-station').length) $("#menu-redes").fadeOut(200); });
+  });
+</script>
+</body>
+</html>
