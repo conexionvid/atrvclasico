@@ -1,19 +1,19 @@
 {
-  "name": "ATOYAC RADIO VERACRUZ - CLASICOS",
-  "short_name": "Atoyac Clasicos",
-  "description": "Promover el turismo, la cultura, la educación, historia y resaltar los valores del ser humano.",
+  "name": "CONEXION VID RADIO - CLASICOS",
+  "short_name": "CONEXION VID Clasicos",
+  "description": "Somos una emisora en línea dedicada a ofrecer una experiencia auditiva única",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#ff4500",
   "icons": [
     {
-      "src": "https://i.postimg.cc/QtkR5W5q/logo.jpg",
+      "src": "https://i.postimg.cc/VNYHS1CD/Chat-GPT-Image-26-may-2026-12-01-07-a-m.png",
       "sizes": "192x192",
       "type": "image/jpeg"
     },
     {
-      "src": "https://i.postimg.cc/QtkR5W5q/logo.jpg",
+      "src": "https://i.postimg.cc/VNYHS1CD/Chat-GPT-Image-26-may-2026-12-01-07-a-m.png",
       "sizes": "512x512",
       "type": "image/jpeg"
     }
